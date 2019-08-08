@@ -50,6 +50,7 @@ class RouteContainer extends React.Component {
         ){
             return;
         }
+        // const column = this.state.columns[source.droppapleId];
         const column = this.state.columns["column-1"];
         
         const newTaskIds = Array.from(column.taskIds)

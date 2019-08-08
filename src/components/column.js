@@ -27,6 +27,7 @@ export default class Column extends React.Component{
                         {this.props.tasks.map((task, index)=> {
                         
                         return <Task key={task.optimal_index} index={index} task={task}/>})}
+                        {/* revert task to optimal index */}
                         {provided.placeholder} 
                        
                     </Tasklist>

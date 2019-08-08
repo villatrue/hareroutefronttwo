@@ -12,9 +12,10 @@ const Container = styled.div`
 
 export default class Task extends  React.Component {
     render(){
-        // debugger
+        const wow = this.props.task.optimal_index.toString()
+      
         return( 
-            <Draggable draggableId={this.props.task.id} index={this.props.index}>
+            <Draggable draggableId={wow} index={this.props.index}>
                 {(provided)=>(
                     
                 <Container
