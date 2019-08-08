@@ -1,15 +1,22 @@
 import React from 'react'
 // import { ReactComponent } from '*.svg';
 import Address from '../components/Address'
+import {DragDropContext} from 'react-beautiful-dnd'
 
-
+import Column from "../components/column"
 
 class RouteContainer extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            addressList: [],
-            route: {}
+            tasks: [],
+            route: {},
+            columns:{"colum-1" :{
+                id: "",
+                title: "",
+                taskIds: []
+            },},
+            columnOrder: []
         }
     }
 
@@ -17,20 +24,38 @@ class RouteContainer extends React.Component {
         fetch('http://localhost:3000/routes/4')
             .then(response => response.json())
             .then(data => {
+                let tasks = data.addresses.map((address)=>{
+                   return address.optimal_index})
                 this.setState({
                     route: data.name,
-                    addressList: data.addresses
+                    tasks: data.addresses,
+                    columns:{"column-1" :{
+                        id: "column-1",
+                        title: data.name,
+                        taskIds: tasks
+                    },},
+                    columnOrder: ["column-1"]
                 })
             });
+    }
+    
+    onDragEnd = result =>{
+        // to do
     }
 
     render(){ 
         return(
-            <div>
-                {this.state.addressList.map((addressObj)=>{
-                    return <Address key={addressObj.id} address={addressObj}/> }  )}
-                
-            </div>
+         <DragDropContext
+            onDragEnd={this.onDragEnd}
+         >
+           { this.state.columnOrder.map((columnId) =>{
+                const column = this.state.columns[columnId];
+                const tasks = column.taskIds.map(taskId=>{
+                    
+                  return  this.state.tasks[taskId]})  
+                return <Column key={column.id} column={column} tasks={tasks}/>
+            })}
+         </DragDropContext>
         )}
 }
 
