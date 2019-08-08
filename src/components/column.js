@@ -23,13 +23,10 @@ export default class Column extends React.Component{
                 <Title>{this.props.column.title}</Title>
                 <Droppable droppableId={this.props.column.title}>
                     {(provided)=>(
-                    <Tasklist
-                        innerRef={provided.innerRef}
-                        {...provided.droppableProps}
-                    >
-                        {this.props.tasks.map((task)=> {
+                    <Tasklist ref={provided.innerRef} {...provided.droppableProps}>
+                        {this.props.tasks.map((task, index)=> {
                         
-                        return <Task key={task.optimal_index} task={task}/>})}
+                        return <Task key={task.optimal_index} index={index} task={task}/>})}
                         {provided.placeholder} 
                        
                     </Tasklist>

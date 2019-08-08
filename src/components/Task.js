@@ -7,16 +7,23 @@ const Container = styled.div`
     border-radius: 2px;
     padding: 8px;
     margin-bottom: 8px;
+    background-color: grey;
 `
 
 export default class Task extends  React.Component {
     render(){
         return( 
-            // <Draggable draggableId={this.props.tasks.id} index={this.props.index}>
-                <Container>
+            <Draggable draggableId={this.props.task.id} index={this.props.index}>
+                {(provided)=>(
+                <Container
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                >
                     {this.props.task.id}
                 </Container>
-            // </Draggable>
+                )}
+            </Draggable>
         )
     }
 }
