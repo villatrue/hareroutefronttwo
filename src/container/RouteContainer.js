@@ -3,6 +3,7 @@ import React from 'react'
 import Address from '../components/Address'
 
 
+
 class RouteContainer extends React.Component {
     constructor(props){
         super(props)
@@ -27,7 +28,7 @@ class RouteContainer extends React.Component {
         return(
             <div>
                 {this.state.addressList.map((addressObj)=>{
-                    return <Address address={addressObj}/> }  )}
+                    return <Address key={addressObj.id} address={addressObj}/> }  )}
                 
             </div>
         )}
