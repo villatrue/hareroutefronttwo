@@ -11,7 +11,7 @@ class RouteContainer extends React.Component {
         this.state={
             tasks: [],
             route: {},
-            columns:{"colum-1" :{
+            columns:{"column-1" :{
                 id: "",
                 title: "",
                 taskIds: []
@@ -44,18 +44,17 @@ class RouteContainer extends React.Component {
         if (!destination){
             return;
         }
+        //Describing what will happen if it isn't dropped anywhere
         if (
             destination.draggableId === source.droppapleId &&
             destination.index === source.index
+            //describing what will happen if it is dropped on the same spot
         ){
             return;
         }
-        // const column = this.state.columns[source.droppapleId];
+        //the code below describes what happens if the draggable item is moved
         const column = this.state.columns["column-1"];
-        
         const newTaskIds = Array.from(column.taskIds)
-
-        ///column is undefined
 
         newTaskIds.splice(source.index, 1)
         newTaskIds.splice(destination.index, 0, draggableId)
