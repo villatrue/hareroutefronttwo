@@ -1,11 +1,13 @@
 import React from 'react'
 // import { ReactComponent } from '*.svg';
+import Address from '../components/Address'
+
 
 class RouteContainer extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            addresses: [],
+            addressList: [],
             route: {}
         }
     }
@@ -16,7 +18,7 @@ class RouteContainer extends React.Component {
             .then(data => {
                 this.setState({
                     route: data.name,
-                    addresses: data.addresses
+                    addressList: data.addresses
                 })
             });
     }
@@ -24,7 +26,9 @@ class RouteContainer extends React.Component {
     render(){ 
         return(
             <div>
-                <a>hello</a>
+                {this.state.addressList.map((addressObj)=>{
+                    return <Address address={addressObj}/> }  )}
+                
             </div>
         )}
 }
