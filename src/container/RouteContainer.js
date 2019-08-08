@@ -40,7 +40,40 @@ class RouteContainer extends React.Component {
     }
     
     onDragEnd = result =>{
-        // to do
+        const { destination, source, draggableId } = result
+        if (!destination){
+            return;
+        }
+        if (
+            destination.draggableId === source.droppapleId &&
+            destination.index === source.index
+        ){
+            return;
+        }
+        const column = this.state.columns["column-1"];
+        
+        const newTaskIds = Array.from(column.taskIds)
+
+        ///column is undefined
+
+        newTaskIds.splice(source.index, 1)
+        newTaskIds.splice(destination.index, 0, draggableId)
+
+        const newColumn ={
+            ...column,
+            taskIds: newTaskIds,
+        }
+
+        const newstate = {
+            ...this.state,
+            columns:{
+                ...this.state.columns,
+                [newColumn.id]: newColumn,
+
+            },
+        }
+
+        this.setState(newstate)
     }
 
     render(){ 
