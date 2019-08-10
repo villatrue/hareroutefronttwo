@@ -3,14 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.3.1",
+    "@material-ui/icons": "^4.2.1",
+    "material-ui": "^0.20.2",
+    "material-ui-search-bar": "^0.4.2",
     "react": "^16.8.6",
     "react-beautiful-dnd": "^11.0.5",
     "react-dnd": "^9.3.4",
     "react-dnd-html5-backend": "^9.3.4",
     "react-dom": "^16.8.6",
+    "react-load-script": "0.0.6",
     "react-scripts": "3.0.1",
     "sortablejs": "^1.6.1",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "typeface-roboto": "0.0.75"
   },
   "scripts": {
     "start": "react-scripts start",
