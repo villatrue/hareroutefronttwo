@@ -4,9 +4,7 @@ import DashBottom from '../components/DashBottom'
 
 
 class RouteContainer extends React.Component {
-    constructor(props){
-        super(props)
-    }
+ 
     componentDidMount(){
         console.log("hi boi")
     }
