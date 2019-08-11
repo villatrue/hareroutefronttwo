@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 // import Typography from '@material-ui/core/Typography';
@@ -14,7 +14,7 @@ import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
-    height: 100,
+    height: 140,
   },
   hoot: {
      margin: 5
@@ -23,11 +23,6 @@ const useStyles = makeStyles(theme => ({
       margin: 5,
       width: 100
   },
-//   toot: {
-    
-//     height: 20
-//   }
-
 }));
 
 const UserInput = (props) => {
@@ -41,7 +36,26 @@ const UserInput = (props) => {
     let [city, setCity] = useState("")
     let [usState, setUsState] = useState("")
     let [name, setName] = useState("")
-    let [waypointDetails, setWaypointDetails] = useState([])
+    let [waypointDetails, setWaypointDetails] = useState({})
+
+    useEffect(() => {
+        setWaypointDetails({
+                    name: name,
+                    address: address,
+                    city: city,
+                    usState: usState,
+                    zip: zip,
+                    lat: lat,
+                    long: long
+                    });
+                    // debugger
+                    // console.log(waypointDetails)
+                    
+      }, [long])
+
+
+
+
 
     const addressHandle=(event)=>{
         setAddress(event.target.value)  
@@ -63,7 +77,10 @@ const UserInput = (props) => {
         setZip(event.target.value)  
     }
 
+    const [buttonShow, setButtonShow] = useState(true)
+
     const key = "su5XuLGuPfAGvxqqAVpqhzAAI7gxO9oS"
+    
 
 
    const renderLat=()=>{
@@ -74,12 +91,36 @@ const UserInput = (props) => {
 
 
         fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                
+                if (response.status === 200){
+                return response.json()}
+            })
             .then(obj => {
                setLat(obj["results"][0].locations[0].displayLatLng.lat)
                setlong(obj["results"][0].locations[0].displayLatLng.lng)
+               setShow(true)
+               setButtonShow(false)
+               setWaypointDetails({
+                name: name,
+                address: address,
+                city: city,
+                usState: usState,
+                zip: zip,
+                lat: lat,
+                long: long
+                });
+                debugger
+                console.log(waypointDetails)
+                
+            
+                     
+            }).catch(function() {
+                alert("error");
+                setShow(false)
+                setButtonShow(true)  
             });
-         setShow(true)       
+            // 
         }
 
     return (
@@ -106,6 +147,7 @@ const UserInput = (props) => {
                 <InputLabel htmlFor="my-input"> Zip Code</InputLabel>
                 <Input onChange={(event)=>zipHandle(event)} id="my-input" aria-describedby="my-helper-text" />
             </FormControl>
+            <br></br>
 
             {show ?
                 <TextField
@@ -136,10 +178,12 @@ const UserInput = (props) => {
               />
              : null
             }   
-            
+            {buttonShow ?
             <Button onClick={()=>{renderLat()}}variant="contained" color="primary" className={classes.button}>
                  Set Coordinates
             </Button>
+             : null
+            } 
             </form>
            
         </Paper>
@@ -147,16 +191,3 @@ const UserInput = (props) => {
   }
   
   export default UserInput
-
-
-
-//   <FormControl className={classes.boot}>
-//   <InputLabel htmlFor="my-input">Latitude</InputLabel>
-//   <Input id="my-input" aria-describedby="my-helper-text" />
-//   {/* <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText> */}
-// </FormControl>
-// <FormControl className={classes.boot}>
-//   <InputLabel htmlFor="my-input">Longitude</InputLabel>
-//   <Input id="my-input" aria-describedby="my-helper-text" />
-//   {/* <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText> */}
-// </FormControl>
