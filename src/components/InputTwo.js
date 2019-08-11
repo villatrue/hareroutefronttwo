@@ -9,59 +9,41 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(3, 2),
-    height: 140,
-  },
-  hoot: {
-     margin: 5
-  }, 
-  boot: {
-      margin: 5,
-      width: 100
-  },
-}));
 
-const UserInput = (props) => {
-    const classes = useStyles();
 
-    let [show, setShow] = useState(false)
-    // let [lat, setLat] =useState("")
-    // let [long, setlong] =useState("")
-    // let [address, setAddress] = useState("")
-    // let [zip, setZip] = useState("")
-    // let [city, setCity] = useState("")
-    // let [usState, setUsState] = useState("")
-    // let [name, setName] = useState("")
-    let [waypointDetails, setWaypointDetails] = useState({
-                    name: "name",
-                    address: 'address',
-                    city: 'city',
-                    usState: 'usState',
-                    zip: 'zip',
-                    lat: 'lat',
-                    long: 'long'
-                    
-    })
+class InputTwo extends React.Component {
+    // useStyles = makeStyles(theme => ({
+    //     root: {
+    //       padding: theme.spacing(3, 2),
+    //       height: 140,
+    //     },
+    //     hoot: {
+    //        margin: 5
+    //     }, 
+    //     boot: {
+    //         margin: 5,
+    //         width: 100
+    //     },
+    //   }));
 
-    // useEffect(() => {
-    //     setWaypointDetails({
-    //                 name: name,
-    //                 address: address,
-    //                 city: city,
-    //                 usState: usState,
-    //                 zip: zip,
-    //                 lat: lat,
-    //                 long: long
-    //                 });
-    //                 console.log(waypointDetails)
-                    
-    //                 console.log(waypointDetails)
-                    
-    //   }, [long])
+    // classes = this.useStyles();
 
-    // const addressHelper = (event)=>{
+    constructor(props){
+        super(props)
+        this.state={
+                name: "name",
+                address: "address",
+                city: "city",
+                usState: "usState",
+                zip: "zip",
+                lat: "lat",
+                long: "long",
+                show: false,
+                buttonShow: false
+    }}
+
+    
+    // addressHelper = (event)=>{
     //     debugger
     //     setWaypointDetails([`${name}`, `${address}`])
     //     //    setWaypointDetails({
@@ -80,36 +62,37 @@ const UserInput = (props) => {
 
 
 
-    const addressHandle=(event)=>{
-        setWaypointDetails({...waypointDetails, address:event.target.value})  
+    addressHandle=(event)=>{
+        this.setState(...this.state,{address: event.target.value})  
     }
 
-    const usStateHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,usState: event.target.value})  
-    }
+    //  usStateHandle=(event)=>{
+    //     setUsState(event.target.value)  
+    // }
   
-    const cityHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,city:event.target.value})  
+    //  cityHandle=(event)=>{
+    //     setCity(event.target.value)  
+    // }
+
+     nameHandle=(event)=>{
+         let state = [...this.state]
+        this.setState(state,{name: event.target.value})  
     }
 
-    const nameHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,name:event.target.value})  
-    }
+    //  zipHandle=(event)=>{
+    //     setZip(event.target.value)  
+    // }
 
-    const zipHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,zip:event.target.value})  
-    }
+    
 
-    const [buttonShow, setButtonShow] = useState(true)
-
-    const key = "su5XuLGuPfAGvxqqAVpqhzAAI7gxO9oS"
+     key = "su5XuLGuPfAGvxqqAVpqhzAAI7gxO9oS"
     
 
 
-   const renderLat=()=>{
-       let addy = waypointDetails.address.split(" ").join("+")
-       let cityModified =  waypointDetails.city.split(" ").join("+")
-       let url = `http://open.mapquestapi.com/geocoding/v1/address?key=${key}&street=${addy}&city=${cityModified}&state=${waypointDetails.usState}&postalCode=${waypointDetails.zip}`
+    renderLat=()=>{
+       let addy = this.state.address.split(" ").join("+")
+       let cityModified =  this.state.city.split(" ").join("+")
+       let url = `http://open.mapquestapi.com/geocoding/v1/address?key=${this.key}&street=${addy}&city=${cityModified}&state=${this.state.usState}&postalCode=${this.state.zip}`
        
 
 
@@ -120,39 +103,42 @@ const UserInput = (props) => {
                 return response.json()}
             })
             .then(obj => {
-               setWaypointDetails({...waypointDetails, lat:obj["results"][0].locations[0].displayLatLng.lat})
-               setWaypointDetails({...waypointDetails, long:obj["results"][0].locations[0].displayLatLng.lng})
-               setShow(true)
-               setButtonShow(false)
-            //    setWaypointDetails({name, address, city, usState, zip, lat, long
+                console.log(obj)
+            //    setLat(obj["results"][0].locations[0].displayLatLng.lat)
+            //    setlong(obj["results"][0].locations[0].displayLatLng.lng)
+            //    setShow(true)
+            //    setButtonShow(false)
+            //    setWaypointDetails({
+            //     name: name,
+            //     address: address,
+            //     city: city,
+            //     usState: usState,
+            //     zip: zip,
+            //     lat: lat,
+            //     long: long
             //     });
-            //     console.log(obj)
-            //     console.log(name)
-            //     console.log(address)
-            //     console.log(lat)
-               
-            //     console.log(waypointDetails)
-                debugger
+                // debugger
+                // console.log(waypointDetails)
                 
             
                      
             }).catch(function() {
                 alert("error");
-                setShow(false)
-                setButtonShow(true)  
+                // setShow(false)
+                // setButtonShow(true)  
             });
             // 
         }
-
+        render(){
     return (
-        <Paper className={classes.root}>
+        <Paper >
             <form>
-            <FormControl className={classes.hoot}>
+            <FormControl >
                 <InputLabel htmlFor="my-input">Waypoint Name</InputLabel>
-                <Input onChange={(event)=>nameHandle(event)} id="my-input" aria-describedby="my-helper-text" />
+                <Input onChange={(event)=>this.nameHandle(event)} id="my-input" aria-describedby="my-helper-text" />
                 {/* <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText> */}
             </FormControl>
-            <FormControl className={classes.hoot}>
+            {/* <FormControl className={classes.hoot}>
                 <InputLabel htmlFor="my-input">Waypoint Address</InputLabel>
                 <Input onChange={(event)=>addressHandle(event)} id="my-input" aria-describedby="my-helper-text" />
             </FormControl>
@@ -173,7 +159,7 @@ const UserInput = (props) => {
             {show ?
                 <TextField
                 id="filled-read-only-input"
-                label={waypointDetails.lat}
+                label={lat}
                 defaultValue="latitude"
                 className={classes.textField}
                 margin="normal"
@@ -188,11 +174,11 @@ const UserInput = (props) => {
             {show ?
                 <TextField
                 id="filled-read-only-input"
-                label={waypointDetails.long}
+                label={long}
                 defaultValue="longitude"
                 className={classes.textField}
                 margin="normal"
-                // onLoad={(event)=>addressHelper(event)}
+                onLoad={(event)=>addressHelper(event)}
                 InputProps={{
                 readOnly: true,
                 }}
@@ -206,10 +192,11 @@ const UserInput = (props) => {
             </Button>
              : null
             } 
+            
+            // */}
             </form>
-           
         </Paper>
-    )
+    )}
   }
   
-  export default UserInput
+  export default InputTwo

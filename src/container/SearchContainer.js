@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchBlock from '../components/SearchBlock'
 import Input from '../components/Input'
+import InputTwo from '../components/InputTwo'
 
 
 
