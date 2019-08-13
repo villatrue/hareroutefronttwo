@@ -7,6 +7,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { async } from 'q';
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,18 +26,25 @@ const useStyles = makeStyles(theme => ({
 
 const UserInput = (props) => {
     const classes = useStyles();
-    const [buttonShow, setButtonShow] = useState(true)
-    const [show, setShow] = useState(false)
+    const [buttonShow, setButtonShow] = useState(0)
+    const [show, setShow] = useState(1)
+    
     const [waypointDetails, setWaypointDetails] = useState({
-        name: "name",
-        address: 'address',
-        city: 'city',
-        usState: 'usState',
-        zip: 'zip',
-        lat: 'lat',
-        long: 'long'
+        name: "",
+        address: '',
+        lat: null,
+        lng: null,
+        city: '',
+        usState: '',
+        zip: ''
+      
                     
     })
+
+    useEffect(() => {
+      {waypointDetails.lat !== null ? props.attress(waypointDetails): console.log("<3")}
+    }, [waypointDetails.lat])
+    
 
     const addressHandle=(event)=>{
         setWaypointDetails({...waypointDetails, address:event.target.value})  
@@ -60,25 +68,32 @@ const UserInput = (props) => {
     
    const key = "su5XuLGuPfAGvxqqAVpqhzAAI7gxO9oS"
     
-   const renderLat=()=>{
+   const renderLat= ()=>{
        let addy = waypointDetails.address.split(" ").join("+")
        let cityModified =  waypointDetails.city.split(" ").join("+")
        let url = `http://open.mapquestapi.com/geocoding/v1/address?key=${key}&street=${addy}&city=${cityModified}&state=${waypointDetails.usState}&postalCode=${waypointDetails.zip}`
        
-    fetch(url)
+     fetch(url)
         .then(response => { 
             if (response.status === 200){
             return response.json()}
         })
         .then(obj => {
             setWaypointDetails({...waypointDetails, lat:obj["results"][0].locations[0].displayLatLng.lat, 
-            long:obj["results"][0].locations[0].displayLatLng.lng});
-            setShow(true)
-            setButtonShow(false)       
-        }).catch(function() {
+            lng:obj["results"][0].locations[0].displayLatLng.lng});
+            // console.log(obj)
+            setShow(0)
+            setButtonShow(1)
+            // console.log(waypointDetails)
+            // debugger
+
+            // props.attress()
+
+        })
+        .catch(function() {
             alert("error");
-            setShow(false)
-            setButtonShow(true)  
+            setShow(1)
+            setButtonShow(0)  
         });
 
     }
@@ -108,7 +123,7 @@ const UserInput = (props) => {
                 </FormControl>
                 <br></br>
 
-                {show ?
+                {show === 0 ?
                     <TextField
                     id="filled-read-only-input"
                     label={waypointDetails.lat}
@@ -123,14 +138,13 @@ const UserInput = (props) => {
                 : null
                 }
 
-                {show ?
+                {show === 0 ?
                     <TextField
                     id="filled-read-only-input"
-                    label={waypointDetails.long}
+                    label={waypointDetails.lng}
                     defaultValue="longitude"
                     className={classes.textField}
                     margin="normal"
-                    onChange={(waypointDetails)=>props.attress(waypointDetails)}
                     fix here
                     InputProps={{
                     readOnly: true,
@@ -139,8 +153,8 @@ const UserInput = (props) => {
                 />
                 : null
                 }   
-                {buttonShow ?
-                <Button onClick={()=>{renderLat()}}variant="contained" color="primary" className={classes.button}>
+                {buttonShow === 0 ?
+                <Button onClick={()=>{renderLat()}} variant="contained" color="primary" className={classes.button}>
                     Set Coordinates
                 </Button>
                 : null
