@@ -2,6 +2,7 @@ import React from 'react'
 // import { ReactComponent } from '*.svg';
 import Address from '../components/Address'
 import {DragDropContext} from 'react-beautiful-dnd'
+ 
 
 import Column from "../components/column"
 
@@ -9,6 +10,7 @@ class RouteContainer extends React.Component {
     constructor(props){
         super(props)
         this.state={
+            routeId: null,
             tasks: [],
             route: {},
             columns:{"column-1" :{
@@ -21,7 +23,10 @@ class RouteContainer extends React.Component {
     }
 
     componentDidMount(){
-        fetch('http://localhost:3000/routes/4')
+        console.log(this.props)
+        let routeId = (this.props.match.url.split("/").pop()        )
+        debugger
+        fetch(`http://localhost:3000/routes/${routeId}`)
             .then(response => response.json())
             .then(data => {
                 let tasks = data.addresses.map((address)=>{

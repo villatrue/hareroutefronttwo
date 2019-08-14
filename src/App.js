@@ -1,26 +1,36 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
+
+import {Route, Switch, withRouter} from 'react-router-dom'
 import SearchContainer from './container/SearchContainer'
-// import RouteContainer from './container/RouteContainer'
-// import DashboardContainer from './container/DashBoardContainer'
+import RouteContainer from './container/RouteContainer'
+
+import DashboardContainer from './container/DashBoardContainer'
 
 
 
-function App() {
-  return (
-    
-      <div className="App">
-        {/* <RouteContainer/> */}
-        {/* <DashboardContainer/> */}
-        <SearchContainer/>
-        
+class App extends React.Component {
+  constructor(props){
+    super(props)
+    this.state={
+      user: 5
+    }
+  }
 
-      </div>
-    
-  );
+  render(){
+    return (     
+        <div className="App">
+          <Switch>
+            <Route exact  path='/dashboard' render={()=><DashboardContainer user={this.state.user}/>}/>
+            <Route exact  path='/route/:id' render={(props)=><RouteContainer {...props}/>}/>
+            <Route exact  path='/addroute/' render={()=><SearchContainer/>}/>
+          </Switch>
+        </div>
+      )
+  }
 }
 
+const AppWithRouter = withRouter(App);
+export default AppWithRouter;
 
-
-export default App;
