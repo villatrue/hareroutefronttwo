@@ -1,6 +1,7 @@
 import React from 'react'
 import DashTop from '../components/DashTop'
-import DashBottom from '../components/DashBottom'
+// import DashBottom from '../components/DashBottom'
+import Slider from '../components/Slider'
 
 
 class RouteContainer extends React.Component {
@@ -30,7 +31,8 @@ class RouteContainer extends React.Component {
                     <DashTop userInfo={this.state.userInfo}/>
                 </div>
                 <div>
-                    <DashBottom routes={this.state.userInfo.routes}/>
+                    <Slider userInfo={this.state.userInfo}/>
+                    {/* <DashBottom routes={this.state.userInfo.routes}/> */}
                 </div>
             </div>
         )

@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(3, 2),
+    padding: theme.spacing(1, 1),
     height: 420,
     margin: 10
   },

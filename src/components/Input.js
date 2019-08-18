@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -42,28 +41,15 @@ const UserInput = (props) => {
     })
 
     useEffect(() => {
-      {waypointDetails.lat !== null ? props.attress(waypointDetails): console.log("<3")}
+      {waypointDetails.lat !== null ? props.addToAddressList(waypointDetails): console.log("<3")}
     }, [waypointDetails.lat])
     
 
-    const addressHandle=(event)=>{
-        setWaypointDetails({...waypointDetails, address:event.target.value})  
-    }
-
-    const usStateHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,usState: event.target.value})  
-    }
-  
-    const cityHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,city:event.target.value})  
-    }
-
-    const nameHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,name:event.target.value})  
-    }
-
-    const zipHandle=(event)=>{
-        setWaypointDetails({...waypointDetails,zip:event.target.value})  
+    const formHandle=(event)=>{
+        setWaypointDetails({...waypointDetails, [event.target.name]:event.target.value})
+        // "REFACTORRRRRR"
+        console.log(waypointDetails)
+        console.log(event.target.name)  
     }
     
    const key = "su5XuLGuPfAGvxqqAVpqhzAAI7gxO9oS"
@@ -103,23 +89,23 @@ const UserInput = (props) => {
             <form>
                 <FormControl className={classes.hoot}>
                     <InputLabel htmlFor="my-input">Waypoint Name</InputLabel>
-                    <Input onChange={(event)=>nameHandle(event)} id="my-input" aria-describedby="my-helper-text" />
+                    <Input name="name" onChange={(event)=>formHandle(event)} id="my-input" aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl className={classes.hoot}>
                     <InputLabel htmlFor="my-input">Waypoint Address</InputLabel>
-                    <Input onChange={(event)=>addressHandle(event)} id="my-input" aria-describedby="my-helper-text" />
+                    <Input name="address" onChange={(event)=>formHandle(event)} id="my-input" aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl className={classes.hoot}>
                     <InputLabel htmlFor="my-input"> City</InputLabel>
-                    <Input onChange={(event)=>cityHandle(event)} id="my-input" aria-describedby="my-helper-text" />
+                    <Input name="city" onChange={(event)=>formHandle(event)} id="my-input" aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl className={classes.hoot}>
                     <InputLabel htmlFor="my-input">State </InputLabel>
-                    <Input onChange={(event)=>usStateHandle(event)} id="my-input" aria-describedby="my-helper-text" />
+                    <Input name="usState" onChange={(event)=>formHandle(event)} id="my-input" aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl className={classes.hoot}>
                     <InputLabel htmlFor="my-input"> Zip Code</InputLabel>
-                    <Input onChange={(event)=>zipHandle(event)} id="my-input" aria-describedby="my-helper-text" />
+                    <Input name="zip" onChange={(event)=>formHandle(event)} id="my-input" aria-describedby="my-helper-text" />
                 </FormControl>
                 <br></br>
 

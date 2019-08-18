@@ -7,6 +7,7 @@ const Container = styled.div`
 margin: 8px;
 border: 1px solid lightgrey;
 border0radius:2px;
+padding: 8px;
 `;
 const Title = styled.h3`
     padding: 8px;
@@ -27,6 +28,7 @@ export default class Column extends React.Component{
                         {this.props.tasks.map((task, index)=> {
                         
                         return <Task key={task.optimal_index} index={index} task={task}/>})}
+                        {/* add method callback for optimal around here somewhere*/}
                         {provided.placeholder} 
                        
                     </Tasklist>

@@ -2,7 +2,7 @@ import React from 'react'
 
 import Input from '../components/Input'
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom'
+
 
 
 
@@ -18,7 +18,8 @@ class SearchContainer extends React.Component {
             renderCount:[0],
             optimizedRoute: [],
             routeName: "Friday",
-            routeID: null
+            routeID: null,
+            render: false
         }
     }
  
@@ -28,9 +29,9 @@ class SearchContainer extends React.Component {
         )
     }
 
-    addToAdressList=(attress)=>{
+    addToAddressList=(address)=>{
         this.setState(prevState => ({
-            addressList: [...prevState.addressList, attress]
+            addressList: [...prevState.addressList, address]
           }),()=>console.log(this.state.addressList)) 
     }
 
@@ -85,7 +86,7 @@ class SearchContainer extends React.Component {
             body: JSON.stringify(formData)
         };
         
-        fetch("http://localhost:3000/addresses/", configObject)
+        return fetch("http://localhost:3000/addresses/", configObject)
             .then(response => response.json())
             .then(object => {
                 console.log(object)
@@ -93,12 +94,14 @@ class SearchContainer extends React.Component {
             .catch(error => {
                 window.alert(error.message);
             });
+             
     }
 
     postRoute=(name)=>{
         let formData = {
             name: name,
-            user_id: 5,
+            user_id: 7,
+            /////make dynamic
             is_optimized: true
         };
         
@@ -110,6 +113,8 @@ class SearchContainer extends React.Component {
             },
             body: JSON.stringify(formData)
         };
+        
+      
         
         fetch("http://localhost:3000/routes/", configObject)
             .then(response => response.json())
@@ -124,12 +129,14 @@ class SearchContainer extends React.Component {
 
     }
 
-    optimize=()=>{
+    optimize = () =>{
+        
         this.postRoute(this.state.routeName)
         let modifiedAddressList =[]
          this.state.addressList.map((addressObj)=>{ 
             let addressString = {"address":`${addressObj["address"]}`,"lat":`${addressObj["lat"]}`,"lng":`${addressObj["lng"]}`}
-            modifiedAddressList.push(addressString)
+            return modifiedAddressList.push(addressString)
+            ///added return for warning reaasons delete this if everything works
         })
 
         let yeet = JSON.stringify(modifiedAddressList)
@@ -163,22 +170,26 @@ class SearchContainer extends React.Component {
             this.setState({
                 optimizedRoute: objArray
             })
-            
-            objArray.map((obj,index)=>{
-                // console.log("The current iteration is: " + index);
-                this.postAddressToRails(obj, index)
-            })
-            // console.log(textObj)
-        });
-    }
-
+            // 
+            this.objectMaptoPost(objArray)
+        })
+      
     
+    }
+    objectMaptoPost=(objArray)=>{
+        let promises = objArray.map(async(obj,index)=> {
+        return this.postAddressToRails(obj, index)
+    })
+    Promise.all(promises).then(()=>this.props.history.push(`/route/${this.state.routeID}`))}
 
     render(){
+            if(this.state.render) {
+                console.log('Heyuyyyyy')
+            }
         return(
             <div>
                 {this.state.renderCount.map((input)=>{
-                    return <Input attress={this.addToAdressList}/>
+                    return <Input addToAddressList={this.addToAddressList}/>
                     })
                 }
                 {this.state.renderCount.length<10?
@@ -186,14 +197,11 @@ class SearchContainer extends React.Component {
                         Add another Waypoint
                     </Button>: null
                 }
-                <Link to={`/route/${this.state.routeID}`}>
-                    
-                {/* route passing null because the route optimization happens after the link */}
-
-                    <Button onClick={()=>{this.optimize()}}variant="contained" color="primary" >
+               
+                     <Button onClick={()=>{this.optimize()}}variant="contained" color="primary" >
                         Optimize Your Route
                     </Button>
-                </Link>
+           
             </div>
         )
     }

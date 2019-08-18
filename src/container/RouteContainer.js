@@ -1,16 +1,17 @@
 import React from 'react'
 // import { ReactComponent } from '*.svg';
-import Address from '../components/Address'
+
 import {DragDropContext} from 'react-beautiful-dnd'
  
 
 import Column from "../components/column"
+// import { tsThisType } from '@babel/types';
 
 class RouteContainer extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            routeId: null,
+            // numbers: [0,1,2,3,4,5,6,7,8,9],
             tasks: [],
             route: {},
             columns:{"column-1" :{
@@ -25,7 +26,7 @@ class RouteContainer extends React.Component {
     componentDidMount(){
         console.log(this.props)
         let routeId = (this.props.match.url.split("/").pop()        )
-        debugger
+        // debugger
         fetch(`http://localhost:3000/routes/${routeId}`)
             .then(response => response.json())
             .then(data => {
@@ -63,7 +64,7 @@ class RouteContainer extends React.Component {
 
         newTaskIds.splice(source.index, 1)
         newTaskIds.splice(destination.index, 0, draggableId)
-
+///could make fevrything below its own function for asynchonisity 
         const newColumn ={
             ...column,
             taskIds: newTaskIds,
@@ -77,9 +78,69 @@ class RouteContainer extends React.Component {
 
             },
         }
+        console.log(this.state.columns["column-1"].taskIds)
 
         this.setState(newstate)
+
+
+        this.patchOptimalIds(newstate)
     }
+
+
+
+    patchOptimalIds =(newState)=>{
+        console.log(newState.columns["column-1"].taskIds)
+        let array = newState.columns["column-1"].taskIds
+        this.state.tasks.map((task)=>{
+            // debugger
+            ///if array[0] is an integer than run function else parseInt then run function
+            this.patchData(task, array.shift())
+            
+        })
+    }
+
+    patchData=(task, index)=>{
+        // debugger
+        let updateData = {
+            name: task.name,
+            address: task.address,
+            zipcode: task.zipcode,
+            latitude: task.latitude,
+            longitude: task.longitude,
+            sorted_index: index,
+            optimal_index: task.optimal_index,
+            first: task.first,
+            last: task.last,
+            route_id: task.route_id
+        };
+        
+        let configObject = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(updateData)
+        };
+        // debugger
+        
+        fetch(`http://localhost:3000/addresses/${task.id}`, configObject)
+            .then(response => {
+                console.log(response)
+                debugger
+                response.json()})
+            
+            .then(object => {
+                console.log(object)
+                debugger
+                console.log(object)
+            })
+            .catch(error => {
+                window.alert(error.message);
+            });
+    }
+
+
 
     render(){ 
         return(
