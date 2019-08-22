@@ -31,6 +31,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const linkHome =()=>{
+  console.log("trying")
+}
+
 export default function ButtonAppBar() {
   const classes = useStyles();
 
@@ -43,7 +47,7 @@ export default function ButtonAppBar() {
                 <HomeIcon className={classes.icon}/>
             </IconButton>
           </Link>
-          <Typography variant="h2" className={classes.title}>
+          <Typography onClick={linkHome}variant="h2" className={classes.title}>
             Hare Route
           </Typography>
           <Button color="inherit">Logout</Button>

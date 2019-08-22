@@ -7,6 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ img {
+  /* height: calc(50vh - 100px);
+  width: auto; */
+  margin: 0 auto; /* it centers any block level element */
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

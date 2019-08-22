@@ -34,35 +34,11 @@ export default class SimpleSlider extends Component {
     };
     return (
       <div>
-        
         <SliderHeader/>
-       
-        <Slider {...settings}>
-            
+        <Slider {...settings}>     
                 {this.props.userInfo.routes !== undefined && this.props.userInfo.routes !== null ? this.props.userInfo.routes.map((route)=>{
                 return <div><Card route={route} key={route.id} id={route.id}/></div>
-                // return <div><h3> hi</h3> </div>
               }): null}
-             
-              
-               {/* <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div> */}
         </Slider>
 
       </div>

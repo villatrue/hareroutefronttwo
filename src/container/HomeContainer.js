@@ -1,4 +1,5 @@
 import React from 'react'
+import HomePageSlider from '../components/HomePageSlider'
 
 class HomeContainer extends React.Component {
     constructor(props){
@@ -12,7 +13,7 @@ class HomeContainer extends React.Component {
       return (     
           <div className>
             
-            Such exciting code
+            <HomePageSlider/>
           </div>
         )
     }
