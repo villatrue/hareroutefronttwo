@@ -18,10 +18,12 @@ export default class SimpleSlider extends Component {
         }
     }
 
-    componentDidMount(){
-        // debugger
-      
-    }
+    background = {backgroundSize : 'cover'};
+    textStyle = {
+        position: 'absolute', 
+        top: '50%', 
+        left: '50%'
+      };
 
   render() {
     const settings = {
@@ -31,8 +33,8 @@ export default class SimpleSlider extends Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       adaptiveHeight: true,
-    //   autoplay: true,
-    //   autoplaySpeed: 2000,
+      autoplay: true,
+      autoplaySpeed: 3000,
     //   centerMode: true,
     //   centerPadding: '200px'
     };
@@ -46,15 +48,19 @@ export default class SimpleSlider extends Component {
              
               
         <div>
-          <img align="center" auto src={require('./hare0.jpg')} alt="Logo" />
+          <h1>Route Logistic Solution</h1>
+          <img backgroundSize = 'cover' align="center" auto src={require('./hare0.jpg')} alt="Logo" />
         </div>
         <div>
+          <h1>Sometimes journeys are not just A to B</h1>
           <img  align="center" src={require('./hare1.jpg')} alt="Logo" />
         </div>
         <div>
+          <h1>We're Here when you need guidance going from A to Z</h1>
           <img  align="center" src={require('./hare2.jpg')} alt="Logo" />
         </div>
         <div>
+          <h1>Minivans with a mountains are sweet!</h1>
           <img align="center" src={require('./hare3.jpg')} alt="Logo" />
         </div>
         </Slider>

@@ -2,6 +2,7 @@ import React from 'react'
 import Map from '../components/Map'
 import {DragDropContext} from 'react-beautiful-dnd'
 import Switch from '@material-ui/core/Switch';
+import sortBy from 'lodash/sortBy'
  
 
 import Column from "../components/column"
@@ -30,12 +31,17 @@ class RouteContainer extends React.Component {
         fetch(`http://localhost:3000/routes/${routeId}`)
             .then(response => response.json())
             .then(data => {
-                let tasks = data.addresses.map((address)=>{
+                // sortBy(users, ['user', 'age']);
+                let addresses = sortBy(data.addresses, ['add', 'optimal_index'])
+
+                // debugger
+                let tasks = addresses.map((address)=>{
+                    // debugger
                    return address[`${this.state.sortBy}`]})
                 this.setState({
                     route: data.name,
                     
-                    tasks: data.addresses,
+                    tasks: addresses,
                     columns:{"column-1" :{
                         id: "column-1",
                         title: data.name,
@@ -145,7 +151,7 @@ class RouteContainer extends React.Component {
     handleChange = (event)=>{
         console.log(this.state)
         let array = []
-        debugger
+        // debugger
         this.state.tasks.map((address)=>array.push(address.optimal_index))
         const column = this.state.columns["column-1"];
         const newColumn ={

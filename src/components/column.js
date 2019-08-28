@@ -18,8 +18,10 @@ const Tasklist = styled.div`
 
 export default class Column extends React.Component{
     render(){
+         console.log(this.props.tasks)
+        //  debugger
         return(
-            
+           
             <Container>
                 <Title>{this.props.column.title}</Title>
                 <Droppable droppableId={this.props.column.title}>

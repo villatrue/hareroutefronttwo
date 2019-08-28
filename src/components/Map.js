@@ -29,11 +29,15 @@
           const DirectionsService = new window.google.maps.DirectionsService();
 
             const arr=[...this.props.waypoints]
-            let varr= sortBy(arr, ['waypoint', 'optimal_id'])
+            let varr= sortBy(arr, ['ar', 'optimal_index'])
+
+            console.log(varr)
+            debugger
             const first= varr.shift()
             const last= varr.pop()
             const waypts=[]
             varr.map(address=>{
+              console.log(address)
                let obj = {location: new window.google.maps.LatLng(address.latitude, address.longitude)}
               return waypts.push(obj)
             })
