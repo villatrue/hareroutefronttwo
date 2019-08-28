@@ -3,9 +3,12 @@ import Map from '../components/Map'
 import {DragDropContext} from 'react-beautiful-dnd'
 import Switch from '@material-ui/core/Switch';
 import sortBy from 'lodash/sortBy'
+
  
 
 import Column from "../components/column"
+require('dotenv').config()
+
 // import { tsThisType } from '@babel/types';
 
 class RouteContainer extends React.Component {
@@ -26,6 +29,8 @@ class RouteContainer extends React.Component {
     }
 
     componentDidMount(){
+        console.log(process.env)
+
         console.log(this.props)
         let routeId = (this.props.match.url.split("/").pop())
         fetch(`http://localhost:3000/routes/${routeId}`)

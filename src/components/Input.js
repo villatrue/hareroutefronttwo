@@ -46,13 +46,11 @@ const UserInput = (props) => {
     
 
     const formHandle=(event)=>{
-        setWaypointDetails({...waypointDetails, [event.target.name]:event.target.value})
-        // "REFACTORRRRRR"
-        console.log(waypointDetails)
-        console.log(event.target.name)  
+        setWaypointDetails({...waypointDetails, [event.target.name]:event.target.value}) 
     }
     
-   const key = "su5XuLGuPfAGvxqqAVpqhzAAI7gxO9oS"
+   const key = process.env.REACT_APP_MAPQUEST
+   
     
    const renderLat= ()=>{
        let addy = waypointDetails.address.split(" ").join("+")

@@ -10,13 +10,16 @@
       GoogleMap,
       // Marker
     } from "react-google-maps";
+  
+
+
 
     
-    
+    const Key = process.env.REACT_APP_GOOGLE
     const MyMapComponent = compose(
       withProps({ 
         googleMapURL:
-          "https://maps.googleapis.com/maps/api/js?key=AIzaSyC7ERWRYIf_1wu7R02ZBnwCsG_48gpDNg4&v=3.exp&libraries=geometry,drawing,places",
+          `https://maps.googleapis.com/maps/api/js?key=${Key}&v=3.exp&libraries=geometry,drawing,places`,
         loadingElement: <div style={{ height: `100%` }} />,
         containerElement: <div style={{ height: `400px` }} />,
         mapElement: <div style={{ height: `100%` }} />
@@ -32,12 +35,13 @@
             let varr= sortBy(arr, ['ar', 'optimal_index'])
 
             console.log(varr)
-            debugger
+            // debugger
             const first= varr.shift()
             const last= varr.pop()
             const waypts=[]
             varr.map(address=>{
               console.log(address)
+              
                let obj = {location: new window.google.maps.LatLng(address.latitude, address.longitude)}
               return waypts.push(obj)
             })
