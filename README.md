@@ -1,3 +1,5 @@
+##Hare Route
+
 -Logistics solution for route planning given route with user provided information. 
 
 -Used Rails as the backend to store user’s saved data and created associations in the database schema using active record, with React as the frontend.
